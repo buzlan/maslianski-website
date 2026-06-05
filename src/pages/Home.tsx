@@ -1,49 +1,37 @@
-import { useLayoutEffect, useEffect } from "react"
-import { useLocation } from "react-router-dom"
-import Header from "../components/Header"
-import Hero from "../components/Hero"
-import WhenToSee from "../components/WhenToSee"
-import Services from "../components/Services"
-import ServicesGrid from "../components/ServicesGrid"
-import Approach from "../components/Approach"
-import Faq from "../components/Faq"
-import ContactSection from "../components/ContactSection"
-import Footer from "../components/Footer"
-import ScrollAnimation from "../components/ScrollAnimation"
+import { useLayoutEffect, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
+import WhenToSee from "../components/WhenToSee";
+import Services from "../components/Services";
+import ServicesGrid from "../components/ServicesGrid";
+import Approach from "../components/Approach";
+import Faq from "../components/Faq";
+import ContactSection from "../components/ContactSection";
+import Footer from "../components/Footer";
+import ScrollAnimation from "../components/ScrollAnimation";
+import { scrollToSectionId } from "../lib/scroll";
 
 const Home: React.FC = () => {
   const location = useLocation();
 
-  const scrollToServices = () => {
-    const servicesGridElement = document.getElementById("services-grid");
-    if (servicesGridElement) {
-      servicesGridElement.scrollIntoView({ behavior: "auto" });
-      return true;
-    }
-    return false;
-  };
+  const targetSectionId = location.state?.scrollToServices
+    ? "services-grid"
+    : location.state?.scrollTo;
 
   useLayoutEffect(() => {
-    // Если пришли с флагом scrollToServices, сразу прокручиваем к карточкам
-    // useLayoutEffect выполняется синхронно перед отрисовкой
-    if (location.state?.scrollToServices) {
-      scrollToServices();
+    if (targetSectionId) {
+      scrollToSectionId(targetSectionId);
     }
-  }, [location.state]);
+  }, [targetSectionId]);
 
   useEffect(() => {
-    // Резервная попытка, если элемент еще не отрендерился
-    if (location.state?.scrollToServices) {
-      requestAnimationFrame(() => {
-        if (!scrollToServices()) {
-          // Еще одна попытка через минимальную задержку
-          requestAnimationFrame(() => {
-            scrollToServices();
-          });
-        }
-      });
-    }
-  }, [location.state]);
+    if (!targetSectionId) return;
+
+    requestAnimationFrame(() => {
+      scrollToSectionId(targetSectionId);
+    });
+  }, [targetSectionId]);
 
   return (
     <>
@@ -73,8 +61,7 @@ const Home: React.FC = () => {
 
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default Home
-
+export default Home;

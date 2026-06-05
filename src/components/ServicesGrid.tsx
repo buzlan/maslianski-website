@@ -1,17 +1,11 @@
-import React from "react";
 import { Link } from "react-router-dom";
+import { Section } from "./ui/Section";
+import { SectionHeading } from "./ui/SectionHeading";
 
-interface ServiceCard {
-  id: string;
-  title: string;
-  image: string;
-  link: string;
-}
-
-const services: ServiceCard[] = [
+const services = [
   {
     id: "evlk",
-    title: "ЭВЛК - Эндовенозная лазерная коагуляция под контролем УЗИ",
+    title: "ЭВЛК — эндовенозная лазерная коагуляция под контролем УЗИ",
     image: "/images/evlkMain.jpeg",
     link: "/services/evlk",
   },
@@ -33,54 +27,61 @@ const services: ServiceCard[] = [
     image: "/images/telangiectasia.jpeg",
     link: "/services/telangiectasia",
   },
-];
+] as const;
 
 const ServicesGrid: React.FC = () => {
   return (
-    <section id="services-grid" className="py-24">
-      <div className="max-w-7xl mx-auto px-4">
-        <h2 className="font-serif text-4xl md:text-5xl text-[#1C2A44] mb-12">
-          Виды операций и манипуляций
-        </h2>
+    <Section id="services-grid">
+      <SectionHeading
+        eyebrow="Процедуры"
+        title="Виды операций и манипуляций"
+      />
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {services.map((service) => (
-            <Link
-              key={service.id}
-              to={service.link}
-              className="group relative overflow-hidden rounded-3xl shadow-xl border border-gray-200 bg-white hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 active:scale-[0.98] active:translate-y-0"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-gray-300 via-gray-200 to-gray-100">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-opacity duration-300 group-hover:from-black/80" />
-              </div>
-              
-              <div className="absolute bottom-0 left-0 right-0 p-6 transition-transform duration-300 group-hover:translate-y-[-4px]">
-                <h3 className="text-white font-semibold text-base md:text-lg leading-tight drop-shadow-lg transition-all duration-300 group-hover:text-[#C5A572]">
-                  {service.title}
-                </h3>
-              </div>
+      <div className="grid gap-5 md:grid-cols-2">
+        {services.map((service) => (
+          <Link
+            key={service.id}
+            to={service.link}
+            className="group relative overflow-hidden rounded-[var(--radius-card)] border border-border bg-surface-elevated shadow-[0_4px_24px_rgb(28_42_68/0.06)] transition-shadow duration-300 hover:shadow-[0_8px_32px_rgb(28_42_68/0.1)]"
+          >
+            <div className="relative aspect-[16/10] overflow-hidden bg-surface-muted">
+              <img
+                src={service.image}
+                alt={service.title}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent" />
+            </div>
 
-              <div className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-lg">
-                <svg className="w-5 h-5 text-[#1C2A44]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6">
+              <h3 className="font-display text-xl font-semibold leading-snug text-white md:text-2xl">
+                {service.title}
+              </h3>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-sm transition-colors group-hover:border-accent group-hover:bg-accent">
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
-              </div>
-            </Link>
-          ))}
-        </div>
+              </span>
+            </div>
+          </Link>
+        ))}
       </div>
-    </section>
+    </Section>
   );
 };
 
 export default ServicesGrid;
-

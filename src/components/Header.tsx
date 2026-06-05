@@ -1,274 +1,192 @@
-import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useScrollToSection } from "../hooks/useScrollToSection";
+import { NAV_LINKS, SERVICE_LINKS } from "../lib/navigation";
+import { Button } from "./ui/Button";
+
+function ChevronDown({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      aria-hidden
+    >
+      <path
+        d="M2.5 4.5L6 8L9.5 4.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 const Header: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { goToSection } = useScrollToSection();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const handleContactsClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string,
+  ) => {
     e.preventDefault();
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(() => {
-        const contactsElement = document.getElementById("contacts");
-        if (contactsElement) {
-          contactsElement.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 100);
-    } else {
-      const contactsElement = document.getElementById("contacts");
-      if (contactsElement) {
-        contactsElement.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
-
-  const handleServiceMenuClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    e.preventDefault();
-    const scrollToSection = () => {
-      const sectionElement = document.getElementById(sectionId);
-      if (sectionElement) {
-        const headerHeight = 80; // Высота хедера
-        const offset = 20; // Дополнительный отступ для красоты
-        const elementPosition = sectionElement.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "auto"
-        });
-      }
-    };
-
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(scrollToSection, 100);
-    } else {
-      scrollToSection();
-    }
-  };
-
-  const handleMobileMenuClick = (sectionId: string) => {
     setIsMobileMenuOpen(false);
-    const scrollToSection = () => {
-      const sectionElement = document.getElementById(sectionId);
-      if (sectionElement) {
-        const headerHeight = 80;
-        const offset = 20;
-        const elementPosition = sectionElement.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "auto"
-        });
-      }
-    };
-
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(scrollToSection, 100);
-    } else {
-      scrollToSection();
-    }
+    goToSection(sectionId);
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl shadow-[0_2px_6px_rgba(0,0,0,0.04)] border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="h-20 flex items-center justify-between">
-
-          <div className="flex items-center gap-4 group/logo cursor-default">
-            <img 
-              src="/images/logo.jpeg" 
-              alt="Маслянский Вячеслав Борисович - Врач-флеболог"
-              className="h-12 w-12 rounded-2xl object-cover shadow transition-transform duration-300 group-hover/logo:scale-105"
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-surface-elevated/85 backdrop-blur-xl">
+      <div className="container-site">
+        <div className="flex h-20 items-center justify-between gap-4">
+          <a
+            href="/"
+            onClick={(e) => handleNavClick(e, "top")}
+            className="group flex min-w-0 items-center gap-3.5"
+          >
+            <img
+              src="/images/logo.jpeg"
+              alt=""
+              className="h-11 w-11 shrink-0 rounded-xl object-cover ring-1 ring-border"
             />
-
-            <div className="leading-tight">
-              <div className="font-serif text-[18px] text-[#1C2A44] font-semibold transition-colors duration-300 group-hover/logo:text-[#C5A572]">
-                Маслянский Вячеслав Борисович
+            <div className="min-w-0 leading-tight">
+              <div className="truncate font-display text-lg font-semibold text-primary transition-colors group-hover:text-accent sm:text-[1.125rem]">
+                <span className="md:hidden">Маслянский В. Б.</span>
+                <span className="hidden md:inline">
+                  Маслянский Вячеслав Борисович
+                </span>
               </div>
-              <div className="text-xs text-gray-500 tracking-wide">
-                врач-флеболог
+              <div className="hidden text-sm tracking-wide text-muted sm:block">
+                врач-флеболог · Минск
               </div>
             </div>
-          </div>
+          </a>
 
-          <nav className="hidden md:flex items-center gap-10 text-sm font-medium text-[#1C2A44]">
-
-            <div className="relative group">
-              <button className="inline-flex items-center gap-1 hover:text-[#C5A572] transition-all duration-300 hover:-translate-y-0.5">
-                <span className="relative">
-                  Услуги
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#C5A572] transition-all duration-300 group-hover:w-full"></span>
-                </span>
-                <span className="text-xs transition-transform duration-300 group-hover:rotate-180">▼</span>
+          <nav className="hidden items-center gap-8 text-[0.9375rem] font-medium text-primary md:flex md:text-base">
+            <div className="group relative">
+              <button
+                type="button"
+                className="inline-flex items-center gap-1.5 py-2 transition-colors hover:text-accent"
+              >
+                Услуги
+                <ChevronDown className="transition-transform duration-200 group-hover:rotate-180" />
               </button>
 
-              <div className="absolute left-0 mt-2 w-52 rounded-xl bg-white shadow-lg border border-gray-100 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-[-10px]">
-                <a 
-                  href="#when" 
-                  onClick={(e) => handleServiceMenuClick(e, "when")}
-                  className="block px-4 py-2 hover:bg-gray-50 transition-all duration-200 hover:translate-x-1"
-                >
-                  Когда обращаться
-                </a>
-                <a 
-                  href="#services" 
-                  onClick={(e) => handleServiceMenuClick(e, "services")}
-                  className="block px-4 py-2 hover:bg-gray-50 transition-all duration-200 hover:translate-x-1"
-                >
-                  Диагностика и лечение
-                </a>
-                <a 
-                  href="#approach" 
-                  onClick={(e) => handleServiceMenuClick(e, "approach")}
-                  className="block px-4 py-2 hover:bg-gray-50 transition-all duration-200 hover:translate-x-1"
-                >
-                  Подход
-                </a>
-                <a 
-                  href="#faq" 
-                  onClick={(e) => handleServiceMenuClick(e, "faq")}
-                  className="block px-4 py-2 hover:bg-gray-50 transition-all duration-200 hover:translate-x-1"
-                >
-                  FAQ
-                </a>
+              <div className="invisible absolute left-0 top-full z-10 w-56 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+                <div className="rounded-[var(--radius-card)] border border-border bg-surface-elevated py-1.5 shadow-[0_8px_30px_rgb(28_42_68/0.08)]">
+                  {SERVICE_LINKS.map((link) => (
+                    <a
+                      key={link.id}
+                      href="/"
+                      onClick={(e) => handleNavClick(e, link.id)}
+                      className="block px-4 py-2.5 text-primary transition-colors hover:bg-surface-muted hover:text-accent"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
 
-            <a 
-              href="#contacts" 
-              onClick={(e) => handleServiceMenuClick(e, "contacts")}
-              className="relative group/link hover:text-[#C5A572] transition-all duration-300 hover:-translate-y-0.5"
-            >
-              <span className="relative">
-                Контакты
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#C5A572] transition-all duration-300 group-hover/link:w-full"></span>
-              </span>
-            </a>
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.id}
+                href="/"
+                onClick={(e) => handleNavClick(e, link.id)}
+                className="py-2 transition-colors hover:text-accent"
+              >
+                {link.label}
+              </a>
+            ))}
           </nav>
 
-          <div className="hidden md:flex items-center gap-3">
-            {/* <a
-              href="https://prodoctorov.ru/moskva/vrach/1316162-maslyanskiy/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-[#1C2A44] text-[#1C2A44] px-6 py-2.5 text-sm font-semibold hover:bg-[#1C2A44] hover:text-white transition-all duration-300 hover:scale-105"
-            >
-              Отзыв
-            </a> */}
-            <a
-              href="#contacts"
-              onClick={handleContactsClick}
-              className="rounded-full bg-[#C5A572] text-white px-6 py-2.5 text-sm font-semibold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 hover:scale-105"
+          <div className="hidden md:block">
+            <Button
+              href="/"
+              variant="accent"
+              size="sm"
+              onClick={(e) => handleNavClick(e, "contacts")}
             >
               Запись
-            </a>
+            </Button>
           </div>
 
-          {/* Мобильное меню кнопка */}
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-[#1C2A44] hover:text-[#C5A572] transition-all duration-300 hover:rotate-90"
-            aria-label="Меню"
+            type="button"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            className="rounded-lg p-2 text-primary transition-colors hover:bg-surface-muted hover:text-accent md:hidden"
+            aria-label={isMobileMenuOpen ? "Закрыть меню" : "Открыть меню"}
+            aria-expanded={isMobileMenuOpen}
           >
-            <svg className="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden
+            >
               {isMobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.75}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.75}
+                  d="M4 7h16M4 12h16M4 17h16"
+                />
               )}
             </svg>
           </button>
-
         </div>
 
-        {/* Мобильное меню */}
-        <div className={`md:hidden border-t border-gray-200 overflow-hidden transition-all duration-300 ${
-          isMobileMenuOpen ? 'max-h-[800px] opacity-100 py-4' : 'max-h-0 opacity-0 py-0'
-        }`}>
-            <nav className="flex flex-col space-y-4">
-              <div className="space-y-2">
-                <div className="text-[#1C2A44] font-semibold py-2">Услуги</div>
+        {isMobileMenuOpen && (
+          <nav className="border-t border-border py-5 md:hidden">
+            <p className="mb-2 px-1 text-xs font-semibold uppercase tracking-wider text-muted">
+              Услуги
+            </p>
+            <div className="mb-4 space-y-0.5">
+              {SERVICE_LINKS.map((link) => (
                 <a
-                  href="#when"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleMobileMenuClick("when");
-                  }}
-                  className="block text-gray-600 hover:text-[#C5A572] transition-all duration-300 py-2 pl-4 hover:translate-x-1"
+                  key={link.id}
+                  href="/"
+                  onClick={(e) => handleNavClick(e, link.id)}
+                  className="block rounded-lg px-3 py-2.5 text-primary transition-colors hover:bg-surface-muted hover:text-accent"
                 >
-                  Когда обращаться
+                  {link.label}
                 </a>
-                <a
-                  href="#services"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleMobileMenuClick("services");
-                  }}
-                  className="block text-gray-600 hover:text-[#C5A572] transition-all duration-300 py-2 pl-4 hover:translate-x-1"
-                >
-                  Диагностика и лечение
-                </a>
-                <a
-                  href="#approach"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleMobileMenuClick("approach");
-                  }}
-                  className="block text-gray-600 hover:text-[#C5A572] transition-all duration-300 py-2 pl-4 hover:translate-x-1"
-                >
-                  Подход
-                </a>
-                <a
-                  href="#faq"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleMobileMenuClick("faq");
-                  }}
-                  className="block text-gray-600 hover:text-[#C5A572] transition-all duration-300 py-2 pl-4 hover:translate-x-1"
-                >
-                  FAQ
-                </a>
-              </div>
+              ))}
+            </div>
 
+            {NAV_LINKS.map((link) => (
               <a
-                href="#contacts"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleMobileMenuClick("contacts");
-                }}
-                className="text-[#1C2A44] hover:text-[#C5A572] transition-all duration-300 py-2 hover:translate-x-1"
+                key={link.id}
+                href="/"
+                onClick={(e) => handleNavClick(e, link.id)}
+                className="block rounded-lg px-3 py-2.5 text-primary transition-colors hover:bg-surface-muted hover:text-accent"
               >
-                Контакты
+                {link.label}
               </a>
+            ))}
 
-              <div className="pt-4 space-y-3 border-t border-gray-200">
-                {/* <a
-                  href="https://prodoctorov.ru/moskva/vrach/1316162-maslyanskiy/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-center rounded-full border border-[#1C2A44] text-[#1C2A44] px-6 py-2.5 text-sm font-semibold hover:bg-[#1C2A44] hover:text-white transition-all duration-300 active:scale-95"
-                >
-                  Отзыв
-                </a> */}
-                <a
-                  href="#contacts"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleContactsClick(e);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="block text-center rounded-full bg-[#C5A572] text-white px-6 py-2.5 text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-300 active:scale-95"
-                >
-                  Запись
-                </a>
-              </div>
-            </nav>
-          </div>
+            <div className="mt-5 border-t border-border pt-5">
+              <Button
+                href="/"
+                variant="accent"
+                className="w-full"
+                onClick={(e) => handleNavClick(e, "contacts")}
+              >
+                Запись на приём
+              </Button>
+            </div>
+          </nav>
+        )}
       </div>
     </header>
   );

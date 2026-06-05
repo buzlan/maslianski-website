@@ -7,26 +7,16 @@ const AppContent: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Убираем хэш полностью на главной странице
-    // Используем задержку, чтобы React Router успел обработать навигацию
-    if (location.pathname === "/") {
-      const timer = setTimeout(() => {
-        const currentHash = window.location.hash;
-        // Убираем хэш только если он пустой или содержит только слеш
-        if (currentHash === "#/" || currentHash === "#") {
-          const path = window.location.pathname;
-          const search = window.location.search;
-          // Убираем хэш, но сохраняем путь и query параметры
-          window.history.replaceState(null, "", path + search);
-        }
-      }, 200);
-      
-      return () => clearTimeout(timer);
+    const hasScrollTarget =
+      location.state?.scrollTo || location.state?.scrollToServices;
+
+    if (!hasScrollTarget) {
+      window.scrollTo({ top: 0, behavior: "auto" });
     }
-  }, [location.pathname]);
+  }, [location.pathname, location.key, location.state]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F7F6F3] overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-surface overflow-x-hidden">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/services/:id" element={<ServiceDetail />} />

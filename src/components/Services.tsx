@@ -1,78 +1,65 @@
-import React from "react";
+import { Card } from "./ui/Card";
+import { BulletList } from "./ui/BulletList";
+import { Section } from "./ui/Section";
+import { SectionHeading } from "./ui/SectionHeading";
+
+const DIRECTIONS = [
+  {
+    eyebrow: "Консультации",
+    title: "Первичная консультация флеболога",
+    content:
+      "Подробный разбор жалоб, факторов риска, осмотр и ультразвуковой скрининг вен, формирование диагноза и рекомендаций.",
+  },
+  {
+    eyebrow: "Лечение",
+    title: "Индивидуальный план лечения и профилактики",
+    items: [
+      "Выбор оптимальной методики, либо сочетание методик лечения для каждого конкретного пациента",
+      "Сеансы склеротерапии",
+      "Рациональная фармакотерапия и подбор компрессионного трикотажа",
+    ],
+  },
+  {
+    eyebrow: "Наблюдение",
+    title: "Повторный и контрольный приём",
+    content:
+      "Оценка динамики, коррекция схемы лечения, ответы на вопросы пациента.",
+    items: [
+      "оценка эффективности терапии",
+      "корректировка рекомендаций",
+      "профилактическое наблюдение",
+    ],
+  },
+] as const;
 
 const Services: React.FC = () => {
   return (
-    <section id="services" className="py-24">
-      <div className="max-w-7xl mx-auto px-4">
+    <Section id="services" variant="muted">
+      <SectionHeading
+        eyebrow="Направления"
+        title="Разделы и направления работы"
+        description="Современная диагностика и лечение заболеваний вен: от первичной консультации до профилактики."
+      />
 
-        <h2 className="font-serif text-4xl md:text-5xl text-[#1C2A44] mb-6">
-          Разделы и направления работы
-        </h2>
-
-        <p className="text-gray-700 text-lg mb-12 max-w-3xl">
-          Современная диагностика и лечение заболеваний вен: от первичной консультации до профилактики.
-        </p>
-
-        <div className="grid md:grid-cols-3 gap-8">
-
-          <div className="bg-white p-8 rounded-3xl shadow-xl border border-white/70">
-            <p className="text-xs uppercase tracking-wide text-gray-500 mb-2">
-              Консультации
-            </p>
-
-            <h3 className="text-lg font-semibold text-[#1C2A44] mb-4">
-              Первичная консультация флеболога
-            </h3>
-
-            <p className="text-gray-700 leading-relaxed">
-              Подробный разбор жалоб, факторов риска, осмотр и ультразвуковой скрининг вен, формирование диагноза и рекомендаций.
-            </p>
-          </div>
-
-          <div className="bg-white p-8 rounded-3xl shadow-xl border border-white/70">
-            <p className="text-xs uppercase tracking-wide text-gray-500 mb-2">
-              Лечение
-            </p>
-
-            <h3 className="text-lg font-semibold text-[#1C2A44] mb-4">
-              Индивидуальный план лечения и профилактики
-            </h3>
-
-            <ul className="text-gray-700 space-y-2">
-              <li>• Выбор оптимальной методики, либо сочетание методик лечения для каждого конкретного пациента</li>
-              <li>• Сеансы склеротерапии</li>
-              <li>• Рациональная фармакотерапия и подбор компрессионного трикотажа</li>
-            </ul>
-          </div>
-
-          <div className="bg-white p-8 rounded-3xl shadow-xl border border-white/70">
-            <p className="text-xs uppercase tracking-wide text-gray-500 mb-2">
-              Наблюдение
-            </p>
-
-            <h3 className="text-lg font-semibold text-[#1C2A44] mb-4">
-              Повторный и контрольный приём
-            </h3>
-
-            <p className="text-gray-700 leading-relaxed mb-4">
-              Оценка динамики, коррекция схемы лечения, ответы на вопросы пациента.
-            </p>
-
-            <ul className="text-gray-700 space-y-2">
-              <li>• оценка эффективности терапии;</li>
-              <li>• корректировка рекомендаций;</li>
-              <li>• профилактическое наблюдение.</li>
-            </ul>
-          </div>
-
-        </div>
-
-        <p className="text-gray-500 text-sm mt-6">
-          План лечения формируется индивидуально на очной консультации.
-        </p>
-
+      <div className="grid gap-6 md:grid-cols-3">
+        {DIRECTIONS.map((direction) => (
+          <Card key={direction.title}>
+            <p className="card-eyebrow">{direction.eyebrow}</p>
+            <h3 className="card-title mb-4">{direction.title}</h3>
+            {"content" in direction && direction.content ? (
+              <p className="text-body mb-4">{direction.content}</p>
+            ) : null}
+            {"items" in direction && direction.items ? (
+              <BulletList items={[...direction.items]} />
+            ) : null}
+          </Card>
+        ))}
       </div>
-    </section>
+
+      <p className="text-body-sm mt-8">
+        План лечения формируется индивидуально на очной консультации.
+      </p>
+    </Section>
   );
 };
 

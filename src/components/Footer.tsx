@@ -1,35 +1,34 @@
-import React from "react";
 import YandexMap from "./YandexMap";
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#f9f8f6] pt-16 pb-10">
-      <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12">
-
+    <footer className="border-t border-border bg-surface-muted pt-16 pb-10">
+      <div className="container-site grid gap-12 md:grid-cols-2">
         <div>
-          <h3 className="font-serif text-2xl text-[#1C2A44] mb-2">
+          <h3 className="font-display text-2xl font-semibold text-primary">
             Маслянский Вячеслав Борисович
           </h3>
+          <p className="mt-1 text-base text-muted">Врач-флеболог</p>
 
-          <p className="text-gray-500 mb-4">Врач-флеболог</p>
-
-          <p className="text-gray-700 leading-relaxed mb-4 max-w-md">
+          <p className="text-body mt-5 max-w-md">
             Диагностика и лечение заболеваний вен. Индивидуальный подход,
-            современная флебология и уважение к каждому пациенту.
+            современная флебология и внимание к каждому пациенту.
           </p>
 
-          <p className="text-gray-700">
-            <strong>Адрес:</strong> г. Минск, ул. Героев 120-й дивизии, 3а
+          <p className="mt-5 text-base text-primary">
+            <span className="font-semibold">Адрес:</span>{" "}
+            <span className="text-muted">
+              г. Минск, ул. Героев 120-й дивизии, 3а
+            </span>
           </p>
         </div>
 
         <YandexMap />
-
       </div>
 
-      <div className="text-center text-gray-500 text-sm mt-10">
-        © 2025 Все права защищены
-      </div>
+      <p className="container-site mt-12 text-center text-sm text-muted">
+        © {new Date().getFullYear()} Все права защищены
+      </p>
     </footer>
   );
 };

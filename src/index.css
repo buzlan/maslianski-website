@@ -1,6 +1,79 @@
 @import "tailwindcss";
 
-.no-break {
-    word-break: keep-all;
+@theme {
+  --color-primary: #1c2a44;
+  --color-primary-light: #2a3a55;
+  --color-accent: #c5a572;
+  --color-accent-muted: #d4bc94;
+  --color-surface: #f7f6f3;
+  --color-surface-muted: #f0ede8;
+  --color-surface-elevated: #ffffff;
+  --color-border: #e8e4de;
+  --color-muted: #6b7280;
+
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1rem;
+  --radius-button: 0.625rem;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--color-primary);
+    -webkit-font-smoothing: antialiased;
   }
-  
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 1.125rem;
+    }
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .hero-bg {
+    background-color: var(--color-surface);
+    background-image:
+      radial-gradient(ellipse 70% 55% at 0% 0%, rgb(197 165 114 / 0.1), transparent),
+      radial-gradient(ellipse 50% 45% at 100% 100%, rgb(28 42 68 / 0.06), transparent);
+  }
+
+  .container-site {
+    @apply max-w-7xl mx-auto px-4 sm:px-6;
+  }
+
+  .text-body {
+    @apply text-[1.0625rem] leading-relaxed text-muted md:text-lg;
+  }
+
+  .text-body-sm {
+    @apply text-sm leading-relaxed text-muted md:text-base;
+  }
+
+  .input-field {
+    @apply w-full rounded-[var(--radius-button)] border border-border bg-surface-muted px-4 py-3 text-[1.0625rem] text-primary outline-none transition-colors placeholder:text-muted/70 focus:border-accent focus:bg-surface-elevated md:text-lg;
+  }
+
+  .card-title {
+    @apply font-display text-xl font-semibold text-primary;
+  }
+
+  .card-eyebrow {
+    @apply mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-accent;
+  }
+}
+
+.no-break {
+  word-break: keep-all;
+}
+
