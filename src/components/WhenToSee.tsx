@@ -79,6 +79,14 @@ function CarouselButton({
 
 const WhenToSee: React.FC = () => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const currentPhoto = PHOTOS[currentPhotoIndex];
+
+  useEffect(() => {
+    PHOTOS.forEach((photo) => {
+      const img = new Image();
+      img.src = photo.image;
+    });
+  }, []);
 
   useEffect(() => {
     if (PHOTOS.length <= 1) return;
@@ -89,8 +97,6 @@ const WhenToSee: React.FC = () => {
 
     return () => clearInterval(interval);
   }, []);
-
-  const currentPhoto = PHOTOS[currentPhotoIndex];
 
   return (
     <Section id="when">
@@ -131,14 +137,22 @@ const WhenToSee: React.FC = () => {
           </Card>
         </div>
 
-        <div className="mx-auto w-full max-w-[340px] lg:mx-0">
+        <div className="mx-auto w-full max-w-[340px] shrink-0 lg:mx-0">
           <Card className="overflow-hidden" padding="none">
-            <div className="relative">
-              <img
-                src={currentPhoto.image}
-                alt={currentPhoto.caption}
-                className="aspect-[4/5] w-full object-cover transition-opacity duration-500"
-              />
+            <div className="relative aspect-[4/5] w-full shrink-0 overflow-hidden bg-surface-muted">
+              {PHOTOS.map((photo, index) => (
+                <img
+                  key={photo.image}
+                  src={photo.image}
+                  alt={index === currentPhotoIndex ? photo.caption : ""}
+                  aria-hidden={index !== currentPhotoIndex}
+                  loading="eager"
+                  decoding="async"
+                  className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${
+                    index === currentPhotoIndex ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              ))}
               {PHOTOS.length > 1 && (
                 <>
                   <CarouselButton
@@ -158,7 +172,7 @@ const WhenToSee: React.FC = () => {
                 </>
               )}
             </div>
-            <p className="text-body-sm border-t border-border px-6 py-4 text-center">
+            <p className="text-body-sm flex h-28 shrink-0 items-center justify-center border-t border-border px-4 py-3 text-center md:h-24">
               {currentPhoto.caption}
             </p>
           </Card>
