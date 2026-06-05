@@ -10,8 +10,8 @@ const YandexMap: React.FC = () => {
         clearInterval(interval);
 
         window.ymaps.ready(() => {
-          // Координаты для адреса: г. Москва, Пресненский вал 16, стр. 3
-          const coordinates: [number, number] = [55.765, 37.562];
+          // Координаты для адреса: г. Минск, ул. Героев 120-й дивизии, 3а
+          const coordinates: [number, number] = [53.94964, 27.707933];
           
           const map = new window.ymaps.Map("map", {
             center: coordinates,
@@ -22,8 +22,8 @@ const YandexMap: React.FC = () => {
           const placemark = new window.ymaps.Placemark(
             coordinates,
             {
-              iconContent: "Клиника 'Варикоза Нет'",
-              balloonContent: "г. Москва, Пресненский вал 16, стр. 3<br/>(метро 'улица 1905 года')",
+              iconContent: "Клиника в Уручье",
+              balloonContent: "г. Минск, ул. Героев 120-й дивизии, 3а",
             },
             {
               preset: "islands#blackStretchyIcon",

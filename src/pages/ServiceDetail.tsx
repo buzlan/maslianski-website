@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -8,6 +8,7 @@ interface Service {
   title: string;
   image: string;
   video?: string;
+  galleryImages?: { src: string; alt: string }[];
   description: string;
   details: string[];
   advantages?: string[];
@@ -79,7 +80,10 @@ const servicesData: Service[] = [
   {
     id: "phlebectomy",
     title: "Минифлебэктомия",
-    image: "",
+    image: "/images/mini-inside1.png",
+    galleryImages: [
+      { src: "/images/mini-inside2.png", alt: "Минифлебэктомия — процедура лечения варикозной болезни" },
+    ],
     description: "Минифлебэктомия по Варади — это малоинвазивная операция для удаления пораженных участков вен, выполняемая через проколы кожи. Процедура проводится под местной анестезией в амбулаторных условиях. В зависимости от сложности заболевания и индивидуальных особенностей венозно-сосудистой патологии, может быть предложено комбинированное лечение с использованием нескольких технологий одновременно для гарантированного и долгосрочного результата.",
     details: [
       "Минимальные проколы без разрезов",
@@ -121,7 +125,10 @@ const servicesData: Service[] = [
   {
     id: "sclerotherapy",
     title: "Склеротерапия",
-    image: "",
+    image: "/images/sclero-inside1.png",
+    galleryImages: [
+      { src: "/images/sclero-inside2.png", alt: "Склеротерапия — процедура лечения варикозной болезни" },
+    ],
     description: "Склеротерапия — это введение специального препарата (склерозанта) в поражённую вену. После этого обработанные вены просто рассасываются, не оставляя видимых следов на коже. Это самый распространённый, доступный и безболезненный метод лечения варикозного расширения вен и устранения телеангиоэктазий. Консервативные методы лечения в этом случае неэффективны.",
     details: [
       "Проверенная временем методика",
@@ -214,10 +221,16 @@ const ServiceDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [imageLoading, setImageLoading] = useState(true);
+  const heroImageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
     setImageLoading(true);
+
+    const img = heroImageRef.current;
+    if (img?.complete) {
+      setImageLoading(false);
+    }
   }, [id]);
 
   const service = servicesData.find((s) => s.id === id);
@@ -272,6 +285,8 @@ const ServiceDetail: React.FC = () => {
                   </video>
                 ) : service.image ? (
               <img
+                ref={heroImageRef}
+                key={service.image}
                 src={service.image}
                 alt={service.title}
                     className={`object-cover w-full h-full transition-opacity duration-300 ${
@@ -293,6 +308,20 @@ const ServiceDetail: React.FC = () => {
             <p className="text-gray-700 text-lg leading-relaxed mb-8">
               {service.description}
             </p>
+
+            {service.galleryImages && service.galleryImages.length > 0 && (
+              <div
+                className={`max-w-4xl mx-auto grid gap-6 mb-10 ${
+                  service.galleryImages.length === 1 ? "grid-cols-1" : "md:grid-cols-2"
+                }`}
+              >
+                {service.galleryImages.map((img) => (
+                  <div key={img.src} className="rounded-lg overflow-hidden h-[400px] bg-gray-100">
+                    <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
+                  </div>
+                ))}
+              </div>
+            )}
 
             {id === "evlk" ? (
               <div className="space-y-8">

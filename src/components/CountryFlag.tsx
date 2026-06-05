@@ -58,7 +58,8 @@ const CountryFlag: React.FC<CountryFlagProps> = ({ code, className = "w-6 h-4" }
   };
 
   return (
-    <span className="inline-flex items-center justify-center flex-shrink-0" style={{ width: '1.5em', height: '1em' }}>
+    // Размер флага задаём переданным className у SVG, чтобы он корректно выравнивался по высоте.
+    <span className="inline-flex items-center justify-center flex-shrink-0">
       {flags[code] || <span className="text-gray-400 text-xs">🏳️</span>}
     </span>
   );

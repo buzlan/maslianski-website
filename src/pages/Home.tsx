@@ -8,7 +8,6 @@ import ServicesGrid from "../components/ServicesGrid"
 import Approach from "../components/Approach"
 import Faq from "../components/Faq"
 import ContactSection from "../components/ContactSection"
-import ReviewsSection from "../components/ReviewsSection"
 import Footer from "../components/Footer"
 import ScrollAnimation from "../components/ScrollAnimation"
 
@@ -69,9 +68,6 @@ const Home: React.FC = () => {
         </ScrollAnimation>
         <ScrollAnimation delay={100}>
           <ContactSection />
-        </ScrollAnimation>
-        <ScrollAnimation delay={200}>
-          <ReviewsSection />
         </ScrollAnimation>
       </main>
 

@@ -18,13 +18,13 @@ const services: ServiceCard[] = [
   {
     id: "phlebectomy",
     title: "Минифлебэктомия",
-    image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&h=300&fit=crop&auto=format",
+    image: "/images/miniflebectomia-main.png",
     link: "/services/phlebectomy",
   },
   {
     id: "sclerotherapy",
     title: "Склеротерапия",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
+    image: "/images/sclero-main.png",
     link: "/services/sclerotherapy",
   },
   {

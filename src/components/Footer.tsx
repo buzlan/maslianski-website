@@ -19,8 +19,7 @@ const Footer: React.FC = () => {
           </p>
 
           <p className="text-gray-700">
-            <strong>Адрес:</strong> г. Москва, Пресненский вал 16, стр. 3<br />
-            <span className="text-gray-600">(метро "улица 1905 года")</span>
+            <strong>Адрес:</strong> г. Минск, ул. Героев 120-й дивизии, 3а
           </p>
         </div>
 
