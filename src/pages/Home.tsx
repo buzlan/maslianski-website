@@ -1,4 +1,4 @@
-import { useLayoutEffect, useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
@@ -20,24 +20,16 @@ const Home: React.FC = () => {
     : location.state?.scrollTo;
 
   useLayoutEffect(() => {
-    if (targetSectionId) {
-      scrollToSectionId(targetSectionId);
-    }
-  }, [targetSectionId]);
-
-  useEffect(() => {
     if (!targetSectionId) return;
 
-    requestAnimationFrame(() => {
-      scrollToSectionId(targetSectionId);
-    });
-  }, [targetSectionId]);
+    scrollToSectionId(targetSectionId);
+  }, [targetSectionId, location.key]);
 
   return (
     <>
       <Header />
 
-      <main className="min-w-0 flex-1 w-full">
+      <main className="min-w-0 w-full flex-1">
         <Hero />
         <ScrollAnimation delay={100}>
           <WhenToSee />
