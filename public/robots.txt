@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://maslianski.ru/sitemap.xml
+Sitemap: https://maslianski.by/sitemap.xml
 
