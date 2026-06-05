@@ -152,14 +152,14 @@ const Header: React.FC = () => {
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
-            <a
+            {/* <a
               href="https://prodoctorov.ru/moskva/vrach/1316162-maslyanskiy/"
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full border border-[#1C2A44] text-[#1C2A44] px-6 py-2.5 text-sm font-semibold hover:bg-[#1C2A44] hover:text-white transition-all duration-300 hover:scale-105"
             >
               Отзыв
-            </a>
+            </a> */}
             <a
               href="#contacts"
               onClick={handleContactsClick}
@@ -247,14 +247,14 @@ const Header: React.FC = () => {
               </a>
 
               <div className="pt-4 space-y-3 border-t border-gray-200">
-                <a
+                {/* <a
                   href="https://prodoctorov.ru/moskva/vrach/1316162-maslyanskiy/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-center rounded-full border border-[#1C2A44] text-[#1C2A44] px-6 py-2.5 text-sm font-semibold hover:bg-[#1C2A44] hover:text-white transition-all duration-300 active:scale-95"
                 >
                   Отзыв
-                </a>
+                </a> */}
                 <a
                   href="#contacts"
                   onClick={(e) => {

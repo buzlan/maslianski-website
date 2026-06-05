@@ -38,7 +38,7 @@ const Hero: React.FC = () => {
           </p>
 
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-[#1C2A44] mt-4 mb-6 leading-tight">
-            <span className="block">Врач флеболог в Москве</span>
+            <span className="block">Врач флеболог в Минске</span>
             <hr className="my-3 border-t-2 border-[#C5A572] w-11/12" />
             <span className="block">Забота о здоровье вен</span>
             <span className="block">и внимательный подход</span>
