@@ -37,7 +37,7 @@ const Home: React.FC = () => {
     <>
       <Header />
 
-      <main className="flex-1">
+      <main className="min-w-0 flex-1 w-full">
         <Hero />
         <ScrollAnimation delay={100}>
           <WhenToSee />

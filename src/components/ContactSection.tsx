@@ -233,8 +233,8 @@ const ContactSection: React.FC = () => {
 
   return (
     <Section id="contacts" variant="muted">
-      <div className="grid gap-10 md:grid-cols-2 md:gap-12">
-        <div>
+      <div className="grid min-w-0 gap-10 md:grid-cols-2 md:gap-12">
+        <div className="min-w-0">
           <SectionHeading
             eyebrow="Связь"
             title="Контакты и запись"
@@ -287,13 +287,13 @@ const ContactSection: React.FC = () => {
           </Card>
         </div>
 
-        <Card padding="lg">
+        <Card padding="lg" className="overflow-hidden">
           <h3 className="card-title mb-2">Обратная связь</h3>
           <p className="text-body-sm mb-6">
             Оставьте заявку, и мы отправим уведомление на почту врача.
           </p>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="w-full min-w-0 space-y-4" onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="Ваше имя"
@@ -302,15 +302,15 @@ const ContactSection: React.FC = () => {
               className="input-field"
             />
 
-            <div className="relative">
-              <div className="flex h-12 items-stretch overflow-hidden rounded-[var(--radius-button)] border border-border bg-surface-muted transition-colors focus-within:border-accent focus-within:bg-surface-elevated">
+            <div className="relative w-full min-w-0">
+              <div className="flex h-12 w-full min-w-0 items-stretch overflow-hidden rounded-[var(--radius-button)] border border-border bg-surface-muted transition-colors focus-within:border-accent focus-within:bg-surface-elevated">
                 <div className="relative shrink-0">
                   <button
                     type="button"
                     onClick={() =>
                       setIsCountryDropdownOpen(!isCountryDropdownOpen)
                     }
-                    className="flex h-full items-center gap-2 border-r border-border px-3 transition-colors hover:bg-surface-muted md:px-4"
+                    className="flex h-full items-center gap-1.5 border-r border-border px-2.5 transition-colors hover:bg-surface-muted sm:gap-2 sm:px-3 md:px-4"
                   >
                     <CountryFlag
                       code={selectedCountry.code}
@@ -341,7 +341,7 @@ const ContactSection: React.FC = () => {
                         className="fixed inset-0 z-10"
                         onClick={() => setIsCountryDropdownOpen(false)}
                       />
-                      <div className="absolute top-full left-0 z-20 mt-1 max-h-60 w-56 overflow-y-auto rounded-[var(--radius-card)] border border-border bg-surface-elevated py-1 shadow-[0_8px_30px_rgb(28_42_68/0.08)] sm:w-64">
+                      <div className="absolute top-full left-0 z-20 mt-1 max-h-60 w-[min(16rem,calc(100vw-2rem))] overflow-y-auto rounded-[var(--radius-card)] border border-border bg-surface-elevated py-1 shadow-[0_8px_30px_rgb(28_42_68/0.08)]">
                         {countries.map((country) => (
                           <button
                             key={country.code}
@@ -371,7 +371,7 @@ const ContactSection: React.FC = () => {
                   placeholder={selectedCountry.placeholder}
                   value={form.phone}
                   onChange={handleChange("phone")}
-                  className="min-w-0 flex-1 border-0 bg-transparent px-4 text-[1.0625rem] text-primary outline-none md:text-lg"
+                  className="min-w-0 flex-1 border-0 bg-transparent px-3 text-[1.0625rem] text-primary outline-none sm:px-4 md:text-lg"
                 />
               </div>
             </div>
