@@ -1,18 +1,16 @@
-"use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 const YandexMap: React.FC = () => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const interval = setInterval(() => {
+    const interval = window.setInterval(() => {
       if (window.ymaps) {
         clearInterval(interval);
 
         window.ymaps.ready(() => {
-          // Координаты для адреса: г. Минск, ул. Героев 120-й дивизии, 3а
           const coordinates: [number, number] = [53.94964, 27.707933];
-          
+
           const map = new window.ymaps.Map("map", {
             center: coordinates,
             zoom: 16,
@@ -27,7 +25,7 @@ const YandexMap: React.FC = () => {
             },
             {
               preset: "islands#blackStretchyIcon",
-            }
+            },
           );
 
           map.geoObjects.add(placemark);
@@ -41,8 +39,8 @@ const YandexMap: React.FC = () => {
   return (
     <div
       id="map"
-      style={{ width: "100%", height: "350px", borderRadius: "20px" }}
-    ></div>
+      className="h-[350px] w-full overflow-hidden rounded-[var(--radius-card)] border border-border"
+    />
   );
 };
 

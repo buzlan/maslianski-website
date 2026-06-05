@@ -1,172 +1,170 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
+import { Card } from "./ui/Card";
+import { BulletList } from "./ui/BulletList";
+import { Section } from "./ui/Section";
+import { SectionHeading } from "./ui/SectionHeading";
 
-interface PhotoSlide {
-  image: string;
-  caption: string;
+const PHOTOS = [
+  {
+    image: "/images/factor-risk-pregnancy.png",
+    caption: "Беременность как фактор риска развития варикоза",
+  },
+  {
+    image: "/images/factor-risk-travel.jpeg",
+    caption: "Длительные перелёты и поездки",
+  },
+  {
+    image: "/images/factor-risk-obesity.jpeg",
+    caption: "Избыточная масса тела и ожирение",
+  },
+] as const;
+
+const VISIBLE_CHANGES = [
+  "Варикозные узлы",
+  "Телеангиоэктазии («сосудистые звёздочки» и «капиллярные сетки»)",
+  "Пигментация (участки потемнения кожи)",
+];
+
+const DISCOMFORT = [
+  "Отёки и тяжесть в ногах",
+  "Судороги",
+  "Боль",
+  "Парестезии (жжение, онемение)",
+];
+
+const RISK_FACTORS = [
+  "Отягощённая наследственность",
+  "Врождённые аномалии и дефициты",
+  "Беременность",
+  "Возраст",
+  "Избыточная масса тела",
+  "Приём гормональных препаратов",
+  "Перенесённый венозный тромбоз",
+  "Частые перелёты и длительные поездки",
+  "Травмы и операции",
+  "Работа, связанная с длительным стоянием или сидением",
+];
+
+function CarouselButton({
+  direction,
+  onClick,
+}: {
+  direction: "prev" | "next";
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`absolute top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-surface-elevated/95 text-primary transition-colors hover:border-accent hover:text-accent ${direction === "prev" ? "left-3" : "right-3"}`}
+      aria-label={direction === "prev" ? "Предыдущее фото" : "Следующее фото"}
+    >
+      <svg
+        className="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d={direction === "prev" ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7"}
+        />
+      </svg>
+    </button>
+  );
 }
 
 const WhenToSee: React.FC = () => {
-  const photos: PhotoSlide[] = [
-    {
-      image: "/images/factor-risk-pregnancy.png",
-      caption: "Беременность как фактор риска развития варикоза"
-    },
-    {
-      image: "/images/factor-risk-travel.jpeg",
-      caption: "Длительные перелеты и поездки"
-    },
-    {
-      image: "/images/factor-risk-obesity.jpeg",
-      caption: "Избыточная масса тела и ожирение"
-    }
-  ];
-
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
-  const intervalRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (photos.length <= 1) return;
+    if (PHOTOS.length <= 1) return;
 
-    // Очищаем предыдущий интервал
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-
-    // Запускаем новый интервал
-    intervalRef.current = setInterval(() => {
-      setCurrentPhotoIndex((prev) => (prev + 1) % photos.length);
+    const interval = window.setInterval(() => {
+      setCurrentPhotoIndex((prev) => (prev + 1) % PHOTOS.length);
     }, 5000);
 
-    // Очистка при размонтировании или изменении зависимостей
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [currentPhotoIndex, photos.length]);
+    return () => clearInterval(interval);
+  }, []);
 
-  const nextPhoto = () => {
-    setCurrentPhotoIndex((prev) => (prev + 1) % photos.length);
-  };
-
-  const prevPhoto = () => {
-    setCurrentPhotoIndex((prev) => (prev - 1 + photos.length) % photos.length);
-  };
+  const currentPhoto = PHOTOS[currentPhotoIndex];
 
   return (
-    <section id="when" className="py-20">
-      <div className="max-w-7xl mx-auto px-4">
+    <Section id="when">
+      <SectionHeading
+        eyebrow="Симптомы"
+        title="Когда стоит обратиться"
+        description="Чем раньше выявлено нарушение венозного оттока — тем проще лечение и ниже риск осложнений."
+      />
 
-        <h2 className="font-serif text-4xl md:text-5xl text-[#1C2A44] mb-8">
-          Когда стоит обратиться
-        </h2>
-
-        <p className="text-gray-700 text-lg leading-relaxed mb-10 max-w-3xl">
-          Чем раньше выявлено нарушение венозного оттока — тем проще лечение
-          и ниже риск осложнений.
-        </p>
-
-        <div className="grid md:grid-cols-3 gap-8 items-start">
-          {/* Левая часть - карточки */}
-          <div className="md:col-span-2 space-y-8">
-            {/* Верхние две карточки */}
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white shadow-xl border border-white/70 rounded-3xl p-8">
-                <h3 className="font-semibold text-lg text-[#1C2A44] mb-4">
-                  Видимые изменения
-                </h3>
-
-                <ul className="text-gray-700 space-y-2">
-                  <li>• Варикозные узлы</li>
-                  <li>• Телеангиоэктазии («сосудистые звёздочки» и «капиллярные сетки»)</li>
-                  <li>• Пигментация (участки потемнения кожи)</li>
-                </ul>
-              </div>
-
-              <div className="bg-white shadow-xl border border-white/70 rounded-3xl p-8">
-                <h3 className="font-semibold text-lg text-[#1C2A44] mb-4">
-                  Неприятные ощущения
-                </h3>
-
-                <ul className="text-gray-700 space-y-2">
-                  <li>• Отёки и тяжесть в ногах</li>
-                  <li>• Судороги</li>
-                  <li>• Боль</li>
-                  <li>• Парестезии (жжение, онемение)</li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Факторы риска - на всю ширину */}
-            <div className="bg-white shadow-xl border border-white/70 rounded-3xl p-8">
-              <h3 className="font-semibold text-lg text-[#1C2A44] mb-6 text-center">
-                Факторы риска
-              </h3>
-
-              <ul className="text-gray-700 space-y-2 grid md:grid-cols-2 gap-x-8 gap-y-2">
-                <li>• Отягощенная наследственность</li>
-                <li>• Врожденные аномалии и дефициты</li>
-                <li>• Беременность</li>
-                <li>• Возраст</li>
-                <li>• Избыточная масса тела</li>
-                <li>• Прием гормональных препаратов</li>
-                <li>• Перенесённый венозный тромбоз</li>
-                <li>• Частые перелеты и длительные поездки</li>
-                <li>• Травмы и операции</li>
-                <li>• Работа, связанная с длительным стоянием или сидением</li>
-              </ul>
-            </div>
+      <div className="grid items-start gap-8 lg:grid-cols-[1fr_340px] xl:gap-12">
+        <div className="space-y-6">
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card>
+              <h3 className="card-title mb-4">Видимые изменения</h3>
+              <BulletList items={VISIBLE_CHANGES} />
+            </Card>
+            <Card>
+              <h3 className="card-title mb-4">Неприятные ощущения</h3>
+              <BulletList items={DISCOMFORT} />
+            </Card>
           </div>
 
-          {/* Правая часть - фото */}
-          <div className="flex justify-center md:justify-start h-full">
-            <div className="bg-white rounded-3xl shadow-xl border border-white/70 overflow-hidden w-full max-w-[400px] relative flex flex-col">
-              <div className="bg-gradient-to-br from-gray-300 via-gray-200 to-gray-100 flex items-center justify-center relative overflow-hidden" style={{ height: '500px' }}>
-                <img
-                  src={photos[currentPhotoIndex].image}
-                  alt={photos[currentPhotoIndex].caption}
-                  className="w-full h-full object-cover transition-opacity duration-500"
-                  style={{ objectPosition: 'center' }}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = `https://via.placeholder.com/400x500/E5E7EB/9CA3AF?text=Фото+${currentPhotoIndex + 1}`;
-                  }}
-                />
-              </div>
+          <Card>
+            <h3 className="card-title mb-5 text-center md:text-left">
+              Факторы риска
+            </h3>
+            <ul className="grid gap-x-8 gap-y-2.5 md:grid-cols-2">
+              {RISK_FACTORS.map((item) => (
+                <li key={item} className="text-body flex items-start gap-3">
+                  <span
+                    className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-accent"
+                    aria-hidden
+                  />
+                  <span className="leading-relaxed">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </Card>
+        </div>
 
-              {photos.length > 1 && (
+        <div className="mx-auto w-full max-w-[340px] lg:mx-0">
+          <Card className="overflow-hidden" padding="none">
+            <div className="relative">
+              <img
+                src={currentPhoto.image}
+                alt={currentPhoto.caption}
+                className="aspect-[4/5] w-full object-cover transition-opacity duration-500"
+              />
+              {PHOTOS.length > 1 && (
                 <>
-                  <button
-                    onClick={prevPhoto}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors z-10"
-                    aria-label="Предыдущее фото"
-                  >
-                    <svg className="w-5 h-5 text-[#1C2A44]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={nextPhoto}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors z-10"
-                    aria-label="Следующее фото"
-                  >
-                    <svg className="w-5 h-5 text-[#1C2A44]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
+                  <CarouselButton
+                    direction="prev"
+                    onClick={() =>
+                      setCurrentPhotoIndex(
+                        (prev) => (prev - 1 + PHOTOS.length) % PHOTOS.length,
+                      )
+                    }
+                  />
+                  <CarouselButton
+                    direction="next"
+                    onClick={() =>
+                      setCurrentPhotoIndex((prev) => (prev + 1) % PHOTOS.length)
+                    }
+                  />
                 </>
               )}
-
-              <div className="p-6 flex-shrink-0">
-                <p className="text-gray-600 text-sm text-center leading-relaxed">
-                  {photos[currentPhotoIndex].caption}
-                </p>
-              </div>
             </div>
-          </div>
+            <p className="text-body-sm border-t border-border px-6 py-4 text-center">
+              {currentPhoto.caption}
+            </p>
+          </Card>
         </div>
       </div>
-    </section>
+    </Section>
   );
 };
 
