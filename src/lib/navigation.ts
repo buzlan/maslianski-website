@@ -10,3 +10,6 @@ export const SERVICE_LINKS = [
 export const NAV_LINKS = [
   { id: "contacts", label: "Контакты" },
 ] as const;
+
+export const KLINIK_DOCTOR_URL =
+  "https://klinik.by/doctors/maslyanskij-vyacheslav-borisovich/";

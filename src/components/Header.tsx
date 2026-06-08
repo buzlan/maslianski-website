@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useScrollToSection } from "../hooks/useScrollToSection";
 import { NAV_LINKS, SERVICE_LINKS } from "../lib/navigation";
-import { Button } from "./ui/Button";
 
 function ChevronDown({ className = "" }: { className?: string }) {
   return (
@@ -52,7 +51,7 @@ const Header: React.FC = () => {
               className="h-11 w-11 shrink-0 rounded-xl object-cover ring-1 ring-border"
             />
             <div className="min-w-0 leading-tight">
-              <div className="truncate font-display text-lg font-semibold text-primary transition-colors group-hover:text-accent sm:text-[1.125rem]">
+              <div className="truncate text-base font-semibold text-primary transition-colors group-hover:text-accent md:text-[1.125rem]">
                 <span className="md:hidden">Маслянский В. Б.</span>
                 <span className="hidden md:inline">
                   Маслянский Вячеслав Борисович
@@ -74,7 +73,7 @@ const Header: React.FC = () => {
                 <ChevronDown className="transition-transform duration-200 group-hover:rotate-180" />
               </button>
 
-              <div className="invisible absolute left-0 top-full z-10 w-56 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+              <div className="invisible absolute right-0 top-full z-10 w-56 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
                 <div className="rounded-[var(--radius-card)] border border-border bg-surface-elevated py-1.5 shadow-[0_8px_30px_rgb(28_42_68/0.08)]">
                   {SERVICE_LINKS.map((link) => (
                     <a
@@ -101,17 +100,6 @@ const Header: React.FC = () => {
               </a>
             ))}
           </nav>
-
-          <div className="hidden md:block">
-            <Button
-              href="/"
-              variant="accent"
-              size="sm"
-              onClick={(e) => handleNavClick(e, "contacts")}
-            >
-              Запись
-            </Button>
-          </div>
 
           <button
             type="button"
@@ -174,17 +162,6 @@ const Header: React.FC = () => {
                 {link.label}
               </a>
             ))}
-
-            <div className="mt-5 border-t border-border pt-5">
-              <Button
-                href="/"
-                variant="accent"
-                className="w-full"
-                onClick={(e) => handleNavClick(e, "contacts")}
-              >
-                Запись на приём
-              </Button>
-            </div>
           </nav>
         )}
       </div>
