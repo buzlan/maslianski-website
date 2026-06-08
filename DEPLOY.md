@@ -42,6 +42,6 @@
 
 Если вам нужно настроить переменные окружения (например, для EmailJS), используйте GitHub Secrets:
 - Settings → Secrets and variables → Actions → New repository secret
-- Добавьте переменные: `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY`, `VITE_NOTIFICATION_EMAIL`
+- Добавьте переменные: `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_DOCTOR_TEMPLATE_ID`, `VITE_EMAILJS_PATIENT_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY`, `VITE_NOTIFICATION_EMAIL`, `VITE_INSTAGRAM_URL`, `VITE_TELEGRAM_URL`
 - Затем обновите workflow файл, чтобы использовать эти секреты
 

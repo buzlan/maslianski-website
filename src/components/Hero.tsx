@@ -1,6 +1,8 @@
 import person from "../images/person.jpeg";
+import { DOCTOR_SOCIAL_LINKS } from "../lib/social";
 import { useScrollToSection } from "../hooks/useScrollToSection";
 import { Button } from "./ui/Button";
+import { SocialLinks } from "./ui/SocialLinks";
 
 const TRUST_ITEMS = [
   "ЭВЛК",
@@ -86,13 +88,16 @@ const Hero: React.FC = () => {
             />
 
             <div className="mt-6 text-center lg:text-left">
-              <p className="font-display text-xl font-semibold text-primary">
+              <p className="font-display text-2xl font-semibold leading-tight text-primary md:text-3xl">
                 Маслянский Вячеслав Борисович
               </p>
-              <p className="text-body-sm mt-2">
-                Член Ассоциации флебологов России и Белорусской ассоциации
-                ангиологов и сосудистых хирургов
-              </p>
+              <div className="text-body-sm mt-3 space-y-1">
+                <p>Врач-хирург, флеболог, рентгеноэндоваскулярный хирург.</p>
+                <p>Член Ассоциации флебологов России</p>
+                <p>Член Белорусской Ассоциации ангиологов и сосудистых хирургов</p>
+              </div>
+
+              <SocialLinks links={DOCTOR_SOCIAL_LINKS} />
             </div>
           </div>
         </div>
