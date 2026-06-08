@@ -1,6 +1,6 @@
-import person from "../images/person.jpeg";
+import person from "../images/person.jpg";
+import { KLINIK_DOCTOR_URL } from "../lib/navigation";
 import { DOCTOR_SOCIAL_LINKS } from "../lib/social";
-import { useScrollToSection } from "../hooks/useScrollToSection";
 import { Button } from "./ui/Button";
 import { SocialLinks } from "./ui/SocialLinks";
 
@@ -12,13 +12,6 @@ const TRUST_ITEMS = [
 ] as const;
 
 const Hero: React.FC = () => {
-  const { goToSection } = useScrollToSection();
-
-  const handleContactsClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    goToSection("contacts");
-  };
-
   return (
     <section id="top" className="hero-bg pb-20 pt-12 md:pb-28 md:pt-16">
       <div className="container-site">
@@ -49,18 +42,61 @@ const Hero: React.FC = () => {
               </p>
             </div>
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <Button
-                href="/"
-                onClick={handleContactsClick}
-              >
-                Записаться на приём
-              </Button>
+            <div className="mt-10 flex flex-col gap-4">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                <Button
+                  href={KLINIK_DOCTOR_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Записаться на приём
+                </Button>
+                <a
+                  href="tel:+375295087095"
+                  className="text-base font-medium text-primary transition-colors hover:text-accent md:text-lg"
+                >
+                  +375 (29) 508-70-95
+                </a>
+              </div>
+
               <a
-                href="tel:+375295087095"
-                className="text-base font-medium text-primary transition-colors hover:text-accent md:text-lg"
+                href={KLINIK_DOCTOR_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex w-fit items-center gap-2 text-sm font-medium text-muted transition-colors hover:text-accent"
               >
-                +375 (29) 508-70-95
+                <svg
+                  className="h-4 w-4 shrink-0 text-accent/80 transition-colors group-hover:text-accent"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d="M12 20h9" />
+                  <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+                </svg>
+                <span>
+                  Оставить отзыв{" "}
+                  <span className="text-primary/70 group-hover:text-accent">
+                    на сайте клиники
+                  </span>
+                </span>
+                <svg
+                  className="h-3.5 w-3.5 shrink-0 opacity-60 transition-transform group-hover:translate-x-0.5 group-hover:opacity-100"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <path d="M7 17 17 7" />
+                  <path d="M7 7h10v10" />
+                </svg>
               </a>
             </div>
 
