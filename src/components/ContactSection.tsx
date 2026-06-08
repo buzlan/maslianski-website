@@ -72,7 +72,7 @@ const getFullPhone = (localPhone: string, country: Country): string => {
 
 function ContactLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+    <p className="card-eyebrow">
       {children}
     </p>
   );

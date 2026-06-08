@@ -65,11 +65,15 @@
   }
 
   .card-title {
-    @apply font-display text-xl font-semibold text-primary;
+    @apply font-display text-xl font-semibold text-primary md:text-2xl;
+  }
+
+  .section-eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.2em] text-accent md:text-sm md:tracking-[0.18em] lg:text-base;
   }
 
   .card-eyebrow {
-    @apply mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-accent;
+    @apply mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-accent md:text-sm md:tracking-[0.16em] lg:text-base;
   }
 }
 

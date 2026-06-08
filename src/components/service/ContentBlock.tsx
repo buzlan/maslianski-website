@@ -11,7 +11,7 @@ interface ContentBlockProps {
 export function ContentBlock({ title, children, items, intro }: ContentBlockProps) {
   return (
     <div>
-      <h2 className="card-title mb-4 text-xl">{title}</h2>
+      <h2 className="card-title mb-4">{title}</h2>
       {intro && (
         <p className="mb-4 leading-relaxed text-muted">{intro}</p>
       )}
