@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { sendEmail } from "../lib/emailjs";
 import CountryFlag from "./CountryFlag";
 import { buttonClassName } from "./ui/buttonStyles";
 import { Card } from "./ui/Card";
@@ -112,14 +113,14 @@ const ContactSection: React.FC = () => {
   );
 
   const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const doctorTemplateId = import.meta.env.VITE_EMAILJS_DOCTOR_TEMPLATE_ID;
+  const patientTemplateId = import.meta.env.VITE_EMAILJS_PATIENT_TEMPLATE_ID;
   const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-  const fallbackEmail = "igorbuzlanov44@gmail.com";
-  const toEmail = useMemo(
-    () => import.meta.env.VITE_NOTIFICATION_EMAIL || fallbackEmail,
-    [],
+  const doctorEmail =
+    import.meta.env.VITE_NOTIFICATION_EMAIL || "vbmaslianski@gmail.com";
+  const isEmailConfigured = Boolean(
+    serviceId && doctorTemplateId && patientTemplateId && publicKey,
   );
-  const isEmailConfigured = Boolean(serviceId && templateId && publicKey);
 
   useEffect(() => {
     if (status !== "success") return;
@@ -193,26 +194,29 @@ const ContactSection: React.FC = () => {
 
     setStatus("loading");
     try {
-      const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          service_id: serviceId,
-          template_id: templateId,
-          user_id: publicKey,
-          template_params: {
-            to_email: toEmail,
-            user_name: form.name,
-            user_phone: fullPhone,
-            user_email: form.email,
-            message: form.message,
-            personal_data: form.personalData ? "Да" : "Нет",
-            newsletter: form.newsletter ? "Да" : "Нет",
-          },
-        }),
+      const templateParams = {
+        to_email: doctorEmail,
+        user_name: form.name,
+        user_phone: fullPhone,
+        user_email: form.email,
+        message: form.message,
+        personal_data: form.personalData ? "Да" : "Нет",
+        newsletter: form.newsletter ? "Да" : "Нет",
+      };
+
+      await sendEmail({
+        serviceId,
+        templateId: doctorTemplateId,
+        publicKey,
+        params: templateParams,
       });
 
-      if (!response.ok) throw new Error("Ошибка отправки формы");
+      await sendEmail({
+        serviceId,
+        templateId: patientTemplateId,
+        publicKey,
+        params: templateParams,
+      });
 
       setStatus("success");
       setForm({
