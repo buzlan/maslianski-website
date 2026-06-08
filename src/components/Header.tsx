@@ -58,7 +58,7 @@ const Header: React.FC = () => {
                 </span>
               </div>
               <div className="hidden text-sm tracking-wide text-muted sm:block">
-                врач-флеболог · Минск
+                Врач-флеболог · Минск
               </div>
             </div>
           </a>
