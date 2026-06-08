@@ -17,7 +17,7 @@ const Hero: React.FC = () => {
       <div className="container-site">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_380px] lg:gap-16 xl:grid-cols-[1fr_420px]">
           <div className="max-w-2xl">
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent md:text-sm md:tracking-[0.18em] lg:text-base xl:text-lg">
               Врач-флеболог · Минск
             </p>
 
