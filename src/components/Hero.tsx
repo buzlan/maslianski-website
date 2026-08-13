@@ -124,10 +124,10 @@ const Hero: React.FC = () => {
             />
 
             <div className="mt-6 text-center lg:text-left">
-              <p className="font-display text-2xl font-semibold leading-tight text-primary md:text-3xl">
+              <p className="font-display text-2xl font-semibold leading-tight text-[#FFEB00] md:text-3xl">
                 Маслянский Вячеслав Борисович
               </p>
-              <div className="text-body-sm mt-3 space-y-1">
+              <div className="mt-3 space-y-1 text-[1.0625rem] leading-relaxed text-[#FFEB00] md:text-lg">
                 <p>Врач-хирург, флеболог, рентгеноэндоваскулярный хирург.</p>
                 <p>Член Ассоциации флебологов России</p>
                 <p>Член Белорусской Ассоциации ангиологов и сосудистых хирургов</p>
