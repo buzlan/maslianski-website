@@ -38,6 +38,21 @@
 - При каждом push в ветку `main` автоматически запускается сборка и деплой
 - Сайт обновляется автоматически в течение 1-2 минут после каждого push
 
+## Превью для Pull Request
+
+Каждый PR получает отдельную ссылку на тестовый сайт с изменениями из этой ветки. Боевой `maslianski.by` при этом не меняется.
+
+Разовая настройка (бесплатный аккаунт Cloudflare):
+
+1. Зарегистрируйтесь на [Cloudflare](https://dash.cloudflare.com/sign-up)
+2. Скопируйте **Account ID** справа на главной дашборда
+3. Создайте API token: [Create Token](https://dash.cloudflare.com/profile/api-tokens) → шаблон **Edit Cloudflare Pages**
+4. В GitHub: **Settings → Secrets and variables → Actions** добавьте:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID`
+
+После этого в каждом новом PR появится комментарий со ссылкой вида `https://pr-12.maslianski-website-preview.pages.dev`. Её можно открыть с телефона.
+
 ## Переменные окружения
 
 Если вам нужно настроить переменные окружения (например, для EmailJS), используйте GitHub Secrets:
