@@ -58,8 +58,19 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Маслянский Вячеслав Борисович — врач-флеболог",
+      "url": "https://maslianski.by/",
+      "inLanguage": "ru",
+      "description": "Врач флеболог в Минске. Лечение варикоза, ЭВЛК, склеротерапия, минифлебэктомия."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
       "@type": "MedicalBusiness",
       "name": "Клиника в Уручье",
+      "url": "https://maslianski.by/",
       "description": "Лечение варикозного расширения вен и заболеваний вен",
       "address": {
         "@type": "PostalAddress",
@@ -122,6 +133,46 @@
       "medicalSpecialty": "Флебология"
     }
     </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Обязательно ли оперировать варикоз?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Не всегда. Всё зависит от стадии заболевания. В ряде случаев достаточно консервативного лечения и наблюдения."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Помогут ли мази и таблетки?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Они способны уменьшать симптомы, но не устраняют первопричину. Важно комплексное лечение и контроль у специалиста."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Нужен ли компрессионный трикотаж?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да, во многих случаях это обязательный элемент терапии. Тип и степень компрессии подбираются индивидуально."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли заниматься спортом?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Обычно умеренная активность полезна. Лучшие варианты — ходьба, плавание, лёгкие динамические нагрузки."
+          }
+        }
+      ]
+    }
+    </script>
     
     <script
     src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"
@@ -129,6 +180,14 @@
     defer></script>
   </head>
   <body translate="no">
+    <script>
+      (function () {
+        var hash = location.hash;
+        if (hash.indexOf("#/") === 0) {
+          history.replaceState(null, "", hash.slice(1) + location.search);
+        }
+      })();
+    </script>
     <div id="root"></div>
   
     <script type="module" src="/src/main.tsx"></script>

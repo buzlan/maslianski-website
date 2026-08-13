@@ -1,7 +1,24 @@
-import { HashRouter, Routes, Route, useLocation } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useRef } from "react"
 import Home from "./pages/Home"
 import ServiceDetail from "./pages/ServiceDetail"
+
+function HashRouteRedirect() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash.startsWith("#/")) return;
+
+    const nextPath = hash.slice(1) || "/";
+    navigate(
+      { pathname: nextPath, search: window.location.search, hash: "" },
+      { replace: true },
+    );
+  }, [navigate]);
+
+  return null;
+}
 
 const AppContent: React.FC = () => {
   const location = useLocation();
@@ -21,6 +38,7 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-surface overflow-x-hidden">
+      <HashRouteRedirect />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/services/:id" element={<ServiceDetail />} />
@@ -31,9 +49,9 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <AppContent />
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 
