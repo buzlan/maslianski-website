@@ -182,10 +182,9 @@
   <body translate="no">
     <script>
       (function () {
-        var redirect = sessionStorage.getItem("spa-redirect");
-        if (redirect) {
-          sessionStorage.removeItem("spa-redirect");
-          history.replaceState(null, "", redirect);
+        var hash = location.hash;
+        if (hash.indexOf("#/") === 0) {
+          history.replaceState(null, "", hash.slice(1) + location.search);
         }
       })();
     </script>
