@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -6,6 +6,7 @@ import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
 import { ServiceHeroImage } from "../components/service/ServiceHeroImage";
 import { useScrollToSection } from "../hooks/useScrollToSection";
+import { usePageMeta, DEFAULT_PAGE_META } from "../hooks/usePageMeta";
 
 interface Service {
   id: string;
@@ -227,6 +228,44 @@ const ServiceDetail: React.FC = () => {
   const { goToSection } = useScrollToSection();
 
   const service = servicesData.find((s) => s.id === id);
+
+  usePageMeta(
+    service
+      ? {
+          title: `${service.title} | Флеболог в Минске`,
+          description: service.description,
+          path: `/services/${service.id}`,
+          image: `https://maslianski.by${service.image}`,
+        }
+      : DEFAULT_PAGE_META,
+  );
+
+  useEffect(() => {
+    if (!service) return;
+
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.dataset.seoStructuredData = "service";
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "MedicalProcedure",
+      name: service.title,
+      description: service.description,
+      medicalSpecialty: "Флебология",
+      url: `https://maslianski.by/services/${service.id}`,
+      image: `https://maslianski.by${service.image}`,
+      performer: {
+        "@type": "Physician",
+        name: "Маслянский Вячеслав Борисович",
+        url: "https://maslianski.by/",
+      },
+    });
+    document.head.appendChild(script);
+
+    return () => {
+      script.remove();
+    };
+  }, [service]);
 
   if (!service) {
     return (
@@ -690,7 +729,7 @@ const ServiceDetail: React.FC = () => {
 
             <div className="mt-12 border-t border-border pt-8">
               <Button
-                href="/#contacts"
+                href="/"
                 onClick={(e) => {
                   e.preventDefault();
                   goToSection("contacts");

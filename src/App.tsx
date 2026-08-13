@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, useLocation } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
 import { useEffect, useRef } from "react"
 import Home from "./pages/Home"
 import ServiceDetail from "./pages/ServiceDetail"
@@ -31,9 +31,9 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <AppContent />
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 
