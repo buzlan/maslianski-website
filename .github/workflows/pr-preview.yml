@@ -88,12 +88,27 @@ jobs:
       - name: Deploy preview
         if: steps.creds.outputs.configured == 'true'
         id: deploy
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          command: pages deploy dist --project-name=maslianski-website-preview --branch=pr-${{ github.event.number }} --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          npx --yes wrangler@4 whoami
+          npx --yes wrangler@4 pages project create maslianski-website-preview --production-branch=main || true
+          npx --yes wrangler@4 pages deploy dist \
+            --project-name=maslianski-website-preview \
+            --branch=pr-${{ github.event.number }} \
+            --commit-dirty=true \
+            | tee deploy.log
+          alias_url="$(grep -Eo 'https://pr-[^[:space:]]+\.pages\.dev' deploy.log | tail -1 || true)"
+          deploy_url="$(grep -Eo 'https://[A-Za-z0-9.-]+\.pages\.dev' deploy.log | tail -1 || true)"
+          preview_url="${alias_url:-$deploy_url}"
+          if [ -z "$preview_url" ]; then
+            echo "Could not parse preview URL from Wrangler output" >&2
+            exit 1
+          fi
+          echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
+          echo "Preview URL: $preview_url"
 
       - name: Comment preview URL
         if: steps.creds.outputs.configured == 'true'
@@ -105,7 +120,7 @@ jobs:
 
             Откройте с телефона или компьютера (боевой сайт не затронут):
 
-            **${{ steps.deploy.outputs.pages-deployment-alias-url || steps.deploy.outputs.deployment-url }}**
+            **${{ steps.deploy.outputs.preview_url }}**
 
             Ссылка обновляется при каждом новом коммите в этот PR.
 
