@@ -17,7 +17,8 @@ const Home: React.FC = () => {
 
   const targetSectionId = location.state?.scrollToServices
     ? "services-grid"
-    : location.state?.scrollTo;
+    : location.state?.scrollTo ||
+      (location.hash === "#contacts" ? "contacts" : undefined);
 
   useLayoutEffect(() => {
     if (!targetSectionId) return;

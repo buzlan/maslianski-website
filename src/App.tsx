@@ -29,12 +29,19 @@ const AppContent: React.FC = () => {
     lastScrollKey.current = location.key;
 
     const hasScrollTarget =
-      location.state?.scrollTo || location.state?.scrollToServices;
+      location.state?.scrollTo ||
+      location.state?.scrollToServices ||
+      location.hash === "#contacts";
 
     if (!hasScrollTarget) {
       window.scrollTo({ top: 0, behavior: "auto" });
     }
-  }, [location.key, location.state?.scrollTo, location.state?.scrollToServices]);
+  }, [
+    location.hash,
+    location.key,
+    location.state?.scrollTo,
+    location.state?.scrollToServices,
+  ]);
 
   return (
     <div className="min-h-screen flex flex-col bg-surface overflow-x-hidden">

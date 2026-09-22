@@ -38,6 +38,10 @@
   h3 {
     font-family: var(--font-display);
   }
+
+  #contacts {
+    scroll-margin-top: 96px;
+  }
 }
 
 @layer components {
