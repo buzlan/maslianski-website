@@ -3,8 +3,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { usePageMeta } from "../hooks/usePageMeta";
 
-const CLINIC = {
-  name: "Клиника в Уручье",
+const DOCTOR = {
+  name: "Маслянский Вячеслав Борисович",
   address: "г. Минск, ул. Героев 120-й дивизии, 3а",
   phones: [
     { label: "Короткий", display: "7095", href: "tel:7095" },
@@ -23,7 +23,7 @@ const APP_FEATURES = [
 ] as const;
 
 const DATA_CATEGORIES = [
-  "данные, которые клиника передаёт для доступа по приглашению;",
+  "данные, которые врач передаёт для доступа по приглашению;",
   "сведения о назначениях и отмеченных действиях;",
   "записи дневника самочувствия;",
   "фотографии, которые добавляет пациент;",
@@ -49,7 +49,7 @@ const Privacy: React.FC = () => {
   usePageMeta({
     title: "Политика конфиденциальности — приложение «Доктор Маслянский»",
     description:
-      "Как приложение «Доктор Маслянский» использует сведения пациента после консультации врача. Доступ выдаёт клиника по приглашению.",
+      "Как приложение «Доктор Маслянский» использует сведения пациента после консультации врача. Доступ выдаёт врач по приглашению.",
     path: "/privacy",
   });
 
@@ -75,7 +75,7 @@ const Privacy: React.FC = () => {
                 Как получить доступ
               </h2>
               <p className="text-body">
-                Доступ выдаёт клиника по приглашению. Самостоятельной
+                Доступ выдаёт лечащий врач по приглашению. Самостоятельной
                 регистрации в приложении нет.
               </p>
             </section>
@@ -117,8 +117,8 @@ const Privacy: React.FC = () => {
               </h2>
               <p className="text-body">
                 Информация из дневника, включая самочувствие и фотографии,
-                может быть доступна лечащему врачу и уполномоченным
-                специалистам клиники, которые участвуют в сопровождении.
+                может быть доступна лечащему врачу, который ведёт
+                сопровождение.
               </p>
             </section>
 
@@ -140,13 +140,13 @@ const Privacy: React.FC = () => {
 
             <section>
               <h2 className="mb-4 text-xl font-semibold text-primary">
-                Контакты клиники
+                Контакты врача
               </h2>
               <div className="rounded-[var(--radius-card)] border border-border bg-surface-elevated p-5 sm:p-6">
-                <p className="text-lg font-medium text-primary">{CLINIC.name}</p>
-                <p className="text-body mt-2">{CLINIC.address}</p>
+                <p className="text-lg font-medium text-primary">{DOCTOR.name}</p>
+                <p className="text-body mt-2">{DOCTOR.address}</p>
                 <div className="mt-5 space-y-2">
-                  {CLINIC.phones.map((phone) => (
+                  {DOCTOR.phones.map((phone) => (
                     <div
                       key={phone.href}
                       className="flex flex-wrap items-baseline gap-x-3 gap-y-1"
@@ -175,11 +175,10 @@ const Privacy: React.FC = () => {
             </section>
 
             <aside className="rounded-[var(--radius-card)] border-2 border-accent bg-[#f8f1e4] p-5 sm:p-6">
-              <p className="card-eyebrow">Уточнить у клиники</p>
+              <p className="card-eyebrow">Уточнить у врача</p>
               <p className="text-body">
-                Юридическое название организации и срок хранения данных на
-                сайте не указаны. Уточните их у лечащего врача или по контактам
-                клиники выше.
+                Срок хранения данных на сайте не указан. Уточните его у
+                лечащего врача.
               </p>
             </aside>
 
