@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useRef } from "react"
 import Home from "./pages/Home"
+import Privacy from "./pages/Privacy"
 import ServiceDetail from "./pages/ServiceDetail"
 
 function HashRouteRedirect() {
@@ -48,6 +49,7 @@ const AppContent: React.FC = () => {
       <HashRouteRedirect />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="/services/:id" element={<ServiceDetail />} />
       </Routes>
     </div>

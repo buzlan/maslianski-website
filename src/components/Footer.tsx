@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import YandexMap from "./YandexMap";
 
 const Footer: React.FC = () => {
@@ -26,9 +27,12 @@ const Footer: React.FC = () => {
         <YandexMap />
       </div>
 
-      <p className="container-site mt-12 text-center text-sm text-muted">
-        © {new Date().getFullYear()} Все права защищены
-      </p>
+      <div className="container-site mt-12 flex flex-col items-center gap-3 text-center text-sm text-muted">
+        <Link to="/privacy" className="transition-colors hover:text-accent">
+          Политика конфиденциальности
+        </Link>
+        <p>© {new Date().getFullYear()} Все права защищены</p>
+      </div>
     </footer>
   );
 };

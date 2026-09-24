@@ -5,6 +5,7 @@ import { copyFileSync, existsSync, mkdirSync } from "fs";
 import { resolve } from "path";
 
 const SPA_ROUTES = [
+  "/privacy",
   "/services/evlk",
   "/services/phlebectomy",
   "/services/sclerotherapy",
