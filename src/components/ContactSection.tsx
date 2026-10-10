@@ -291,7 +291,7 @@ const ContactSection: React.FC = () => {
           </Card>
         </div>
 
-        <div id="feedback" className="min-w-0">
+        <div id="feedback" tabIndex={-1} className="min-w-0 scroll-mt-32 outline-none">
         <Card padding="lg" className="overflow-hidden">
           <h3 className="card-title mb-2">Обратная связь</h3>
           <p className="text-body-sm mb-6">
