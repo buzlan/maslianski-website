@@ -291,6 +291,7 @@ const ContactSection: React.FC = () => {
           </Card>
         </div>
 
+        <div id="feedback" className="min-w-0">
         <Card padding="lg" className="overflow-hidden">
           <h3 className="card-title mb-2">Обратная связь</h3>
           <p className="text-body-sm mb-6">
@@ -447,6 +448,7 @@ const ContactSection: React.FC = () => {
             </button>
           </form>
         </Card>
+        </div>
       </div>
     </Section>
   );

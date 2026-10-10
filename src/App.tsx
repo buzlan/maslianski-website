@@ -32,7 +32,8 @@ const AppContent: React.FC = () => {
     const hasScrollTarget =
       location.state?.scrollTo ||
       location.state?.scrollToServices ||
-      location.hash === "#contacts";
+      location.hash === "#contacts" ||
+      location.hash === "#feedback";
 
     if (!hasScrollTarget) {
       window.scrollTo({ top: 0, behavior: "auto" });
